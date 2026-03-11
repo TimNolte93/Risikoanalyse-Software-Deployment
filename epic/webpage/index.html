@@ -71,71 +71,84 @@
             </div>
         </div>
 
-        <h2>Teil 3: Wahrscheinlichkeitsrechnung</h2>
-        <p>Berechnen Sie hier spezifische Szenarien für das Deployment (Standard: n=200, p=3%).</p>
-        
-        <div class="calculator-grid">
-            
-            <div class="calc-box genau">
-                <h3>GENAU k Fehler</h3>
-                <div class="input-group">
-                    <label>Anzahl Rechner (n)</label>
-                    <input type="number" id="n_genau" value="200">
-                </div>
-                <div class="input-group">
-                    <label>Fehlerquote in % (p)</label>
-                    <input type="number" step="0.1" id="p_genau" value="3">
-                </div>
-                <div class="input-group">
-                    <label>Exakte Fehler (k)</label>
-                    <input type="number" id="k_genau" value="6">
-                </div>
-                <button onclick="calcGenau()">Berechnen</button>
-                <div class="result-box genau" id="res_genau">-- %</div>
+<div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown('teil3')">
+                Teil 3: Wahrscheinlichkeitsrechnung (Live-Rechner)
+                <span>▼</span>
             </div>
+            <div class="dropdown-content" id="teil3">
+                <p>Berechnen Sie hier spezifische Szenarien für das Deployment (Standard: n=200, p=3%).</p>
+                <div class="calculator-grid">
+                    <div class="calc-box genau">
+                        <h3>GENAU k Fehler</h3>
+                        <div class="input-group">
+                            <label>Anzahl Rechner (n)</label>
+                            <input type="number" id="n_genau" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>Fehlerquote in % (p)</label>
+                            <input type="number" step="0.1" id="p_genau" value="3">
+                        </div>
+                        <div class="input-group">
+                            <label>Exakte Fehler (k)</label>
+                            <input type="number" id="k_genau" value="6">
+                        </div>
+                        <button onclick="calcGenau()">Berechnen</button>
+                        <div class="result-box genau" id="res_genau">-- %</div>
+                    </div>
 
-            <div class="calc-box">
-                <h3>HÖCHSTENS k Fehler</h3>
-                <div class="input-group">
-                    <label>Anzahl Rechner (n)</label>
-                    <input type="number" id="n_hoechst" value="200">
-                </div>
-                <div class="input-group">
-                    <label>Fehlerquote in % (p)</label>
-                    <input type="number" step="0.1" id="p_hoechst" value="3">
-                </div>
-                <div class="input-group">
-                    <label>Maximal Fehler (k)</label>
-                    <input type="number" id="k_hoechst" value="7">
-                </div>
-                <button onclick="calcHoechst()">Berechnen</button>
-                <div class="result-box" id="res_hoechst">-- %</div>
-            </div>
+                    <div class="calc-box">
+                        <h3>HÖCHSTENS k Fehler</h3>
+                        <div class="input-group">
+                            <label>Anzahl Rechner (n)</label>
+                            <input type="number" id="n_hoechst" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>Fehlerquote in % (p)</label>
+                            <input type="number" step="0.1" id="p_hoechst" value="3">
+                        </div>
+                        <div class="input-group">
+                            <label>Maximal Fehler (k)</label>
+                            <input type="number" id="k_hoechst" value="7">
+                        </div>
+                        <button onclick="calcHoechst()">Berechnen</button>
+                        <div class="result-box" id="res_hoechst">-- %</div>
+                    </div>
 
-            <div class="calc-box mindestens">
-                <h3>MINDESTENS k Fehler</h3>
-                <div class="input-group">
-                    <label>Anzahl Rechner (n)</label>
-                    <input type="number" id="n_mind" value="200">
+                    <div class="calc-box mindestens">
+                        <h3>MINDESTENS k Fehler</h3>
+                        <div class="input-group">
+                            <label>Anzahl Rechner (n)</label>
+                            <input type="number" id="n_mind" value="200">
+                        </div>
+                        <div class="input-group">
+                            <label>Fehlerquote in % (p)</label>
+                            <input type="number" step="0.1" id="p_mind" value="3">
+                        </div>
+                        <div class="input-group">
+                            <label>Minimal Fehler (k)</label>
+                            <input type="number" id="k_mind" value="10">
+                        </div>
+                        <button onclick="calcMind()">Berechnen</button>
+                        <div class="result-box mindestens" id="res_mind">-- %</div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Fehlerquote in % (p)</label>
-                    <input type="number" step="0.1" id="p_mind" value="3">
-                </div>
-                <div class="input-group">
-                    <label>Minimal Fehler (k)</label>
-                    <input type="number" id="k_mind" value="10">
-                </div>
-                <button onclick="calcMind()">Berechnen</button>
-                <div class="result-box mindestens" id="res_mind">-- %</div>
+                <br>
             </div>
         </div>
 
-        <div class="chart-container">
-            <h2>Teil 4: Sensitivitätsanalyse (Das Diagramm)</h2>
-            <p>Untersuchung, wie sich das Gesamtrisiko verändert, wenn sich die Basiswahrscheinlichkeit p um ± 1 % ändert.</p>
-            
-            <canvas id="myChart"></canvas>
+        <div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown('teil4')">
+                Teil 4: Sensitivitätsanalyse (Das Diagramm)
+                <span>▼</span>
+            </div>
+            <div class="dropdown-content" id="teil4">
+                <p>Untersuchung, wie sich das Gesamtrisiko verändert, wenn sich die Basiswahrscheinlichkeit p um ± 1 % ändert.</p>
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <br>
+            </div>
         </div>
 
         <div class="dropdown" style="margin-top: 30px;">
