@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMarlin - Risikoanalyse Software-Deployment</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Risikoanalyse</h1>
+        <p>Epic-Aufgabe - Mathe 4.4 | Team BlueMarlin</p>
+    </header>
+
+    <div class="container">
+
+        <div class="epic-box">
+            <h2>Szenario C (Software-Deployment)</h2>
+            <p>Ein kritischer Patch wird auf <strong>200 Client-Rechnern</strong> verteilt. Die Wahrscheinlichkeit für einen fehlerhaften Abbruch pro Client liegt bei <strong>3&nbsp;%</strong>.</p>
+            <p>Bis jetzt wird der Patch auf alle 200 Client-Rechner gleichzeitig verteilt, der IT-Support hat aber nur Kapazitäten sich um <strong>7 Client-Rechner gleichzeitig</strong> zu kümmern. Für jeden weiteren Fehlschlag entstehen Zusatzkosten oder ein Ausfall der Arbeitszeit.</p>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown('teil1')">
+                Teil 1: Datenmodellierung
+                <span>▼</span>
+            </div>
+            <div class="dropdown-content" id="teil1">
+                <p>Identifikation der Zufallsgröße, Definition von n und p. Aufstellen der theoretischen Wahrscheinlichkeitsfunktion.</p>
+                <ul>
+                    <li><strong>Zufallsgröße X:</strong> die Anzahl der fehlerhaften Abbrüche</li>
+                    <li><strong>n:</strong> Anzahl der Versuche (n = 200)</li>
+                    <li><strong>p:</strong> Eintrittswahrscheinlichkeit für den Fehler (3 % &rarr; p = 0,03)</li>
+                </ul>
+                
+                <p><strong>Wahrscheinlichkeitsfunktion:</strong></p>
+                <p>$$ P(X = k) = \binom{n}{k} \cdot p^k \cdot (1-p)^{n-k} $$</p>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown('teil2')">
+                Teil 2: Erwartungswert & Risikoanalyse
+                <span>▼</span>
+            </div>
+            <div class="dropdown-content" id="teil2">
+                <p><strong>Formel für Erwartungswert:</strong> $$ \mu = n \cdot p $$</p>
+                <p>$$ \mu = 200 \cdot 0,03 = 6 $$</p>
+                <p>Das bedeutet: Führen wir diesen Patch an 200 Rechnern durch, ist zu erwarten, dass wir bei 6 Rechnern manuell eingreifen müssen.</p>
+                
+                <h3>Risikotabelle (Vollständig 0 bis 10)</h3>
+                <table>
+                    <tr><th>k (Fehler)</th><th>Wahrscheinlichkeit</th><th>Status Support</th></tr>
+                    <tr class="ok-row"><td>0</td><td>0,23 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>1</td><td>1,40 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>2</td><td>4,30 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>3</td><td>8,79 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>4</td><td>13,38 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>5</td><td>16,23 %</td><td>OK</td></tr>
+                    <tr class="ok-row"><td>6</td><td>16,31 %</td><td>OK</td></tr>
+                    <tr><td>7</td><td>13,98 %</td><td>Limit erreicht</td></tr>
+                    <tr class="alert-row"><td>8</td><td>10,48 %</td><td>Kritisch (Zusatzkosten)</td></tr>
+                    <tr class="alert-row"><td>9</td><td>6,81 %</td><td>Kritisch (Zusatzkosten)</td></tr>
+                    <tr class="alert-row"><td>10</td><td>4,00 %</td><td>Kritisch (Zusatzkosten)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <h2>Teil 3: Wahrscheinlichkeitsrechnung (Live)</h2>
+        <p>Berechnen Sie hier spezifische Szenarien für das Deployment (Standard: n=200, p=3%).</p>
+        
+        <div class="calculator-grid">
+            
+            <div class="calc-box genau">
+                <h3>GENAU k Fehler</h3>
+                <div class="input-group">
+                    <label>Anzahl Rechner (n)</label>
+                    <input type="number" id="n_genau" value="200">
+                </div>
+                <div class="input-group">
+                    <label>Fehlerquote in % (p)</label>
+                    <input type="number" step="0.1" id="p_genau" value="3">
+                </div>
+                <div class="input-group">
+                    <label>Exakte Fehler (k)</label>
+                    <input type="number" id="k_genau" value="6">
+                </div>
+                <button onclick="calcGenau()">Berechnen</button>
+                <div class="result-box genau" id="res_genau">-- %</div>
+            </div>
+
+            <div class="calc-box">
+                <h3>HÖCHSTENS k Fehler</h3>
+                <div class="input-group">
+                    <label>Anzahl Rechner (n)</label>
+                    <input type="number" id="n_hoechst" value="200">
+                </div>
+                <div class="input-group">
+                    <label>Fehlerquote in % (p)</label>
+                    <input type="number" step="0.1" id="p_hoechst" value="3">
+                </div>
+                <div class="input-group">
+                    <label>Maximal Fehler (k)</label>
+                    <input type="number" id="k_hoechst" value="7">
+                </div>
+                <button onclick="calcHoechst()">Berechnen</button>
+                <div class="result-box" id="res_hoechst">-- %</div>
+            </div>
+
+            <div class="calc-box mindestens">
+                <h3>MINDESTENS k Fehler</h3>
+                <div class="input-group">
+                    <label>Anzahl Rechner (n)</label>
+                    <input type="number" id="n_mind" value="200">
+                </div>
+                <div class="input-group">
+                    <label>Fehlerquote in % (p)</label>
+                    <input type="number" step="0.1" id="p_mind" value="3">
+                </div>
+                <div class="input-group">
+                    <label>Minimal Fehler (k)</label>
+                    <input type="number" id="k_mind" value="10">
+                </div>
+                <button onclick="calcMind()">Berechnen</button>
+                <div class="result-box mindestens" id="res_mind">-- %</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Teil 4: Sensitivitätsanalyse (Das Diagramm)</h2>
+            <p>Untersuchung, wie sich das Gesamtrisiko verändert, wenn sich die Basiswahrscheinlichkeit p um ± 1 % ändert.</p>
+            
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="dropdown" style="margin-top: 30px;">
+            <div class="dropdown-header" onclick="toggleDropdown('teil5')">
+                Teil 5: Strategie-Entwicklung & Fazit
+                <span>▼</span>
+            </div>
+            <div class="dropdown-content" id="teil5">
+                <h3>Zusammenfassung</h3>
+                <ul>
+                    <li><strong>Der Normalfall:</strong> Bei einer Fehlerquote von 3% fallen im Durchschnitt 6 Rechner aus.</li>
+                    <li><strong>Das finanzielle Risiko:</strong> Die Wahrscheinlichkeit, dass unser Support-Limit von 7 Rechnern überschritten wird, liegt bei 25,4 %. In jedem vierten Fall entstehen Zusatzkosten.</li>
+                    <li><strong>Krisenszenario:</strong> Die Gefahr eines massiven Ausfalls (≥10 Rechner) liegt bei 8,08 %.</li>
+                </ul>
+
+                <h3>Die Patch-Strategie ändern</h3>
+                <p><strong>Maßnahme:</strong> Wir dürfen das Update niemals auf alle 200 Rechner gleichzeitig verteilen (Big Bang). Wir wechseln zu einem stufenweisen Deployment.</p>
+                <p><strong>Umsetzung:</strong> Wir teilen die 200 Rechner in 4 Gruppen zu je 50 Rechnern. Wenn in der ersten Gruppe die 3 % Fehlerquote zuschlägt, fallen maximal 1 bis 2 Rechner aus. Der Support kann diese sofort reparieren und den Fehler im Patch analysieren, bevor die nächsten 50 Rechner an die Reihe kommen.</p>
+                
+                <h3>Redundanz und Fallback-Pläne</h3>
+                <p><strong>Rollback:</strong> Schlägt das Patch fehl, wird automatisch der alte Zustand wiederhergestellt.</p>
+                <p><strong>Redundanz:</strong> Für kritische Arbeitsplätze werden Ersatzgeräte bereitgestellt.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="code.js"></script>
+</body>
+</html>

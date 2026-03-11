@@ -1,0 +1,17 @@
+# Ignoriere alle Tabellen und Dokumente
+*.ods
+*.csv
+*.odt
+*.pdf
+
+# Ignoriere alle Bilder
+*.png
+*.jpg
+*.jpeg
+
+# Ignoriere Python-Skripte (falls du NUR die Webseite auf GitHub haben willst)
+*.py
+
+# Ignoriere Mac/Windows Systemdateien (Standard-Praxis)
+.DS_Store
+Thumbs.db
